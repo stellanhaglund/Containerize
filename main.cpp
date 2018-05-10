@@ -126,7 +126,7 @@ int main(int argc, char **argv)
             if(is_regular_file(it->status()))
             {
                 files.insert(it->path().string());
-                ifstream fin(it->path().string());
+                boost::filesystem::ifstream fin(it->path().string());
                 string driver;
                 fin >> driver;
 
@@ -162,7 +162,7 @@ int main(int argc, char **argv)
     }
 
     depsolve(cmd[0], files);
-    ofstream dockerfile("Dockerfile");
+    boost::filesystem::ofstream dockerfile("Dockerfile");
     dockerfile << "FROM " << (essentials ? "busybox" : from) << endl
         << "ADD . /" << endl << "CMD [\"" << join(cmd, "\", \"") << "\"]";
     if(expose != -1)
